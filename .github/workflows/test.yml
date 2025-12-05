@@ -1,0 +1,38 @@
+name: Test Find Lowest Number
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    
+    - name: Test Case 1: File with 10 numbers
+      run: |
+        python find_lowest_number.py test_data/test1_input.txt output1.txt
+        diff test_data/test1_expected.txt output1.txt
+        echo "Test 1 passed: File with 10 numbers"
+    
+    - name: Test Case 2: File with 1 number
+      run: |
+        python find_lowest_number.py test_data/test2_input.txt output2.txt
+        diff test_data/test2_expected.txt output2.txt
+        echo "Test 2 passed: File with 1 number"
+    
+    - name: Test Case 3: Blank file
+      run: |
+        python find_lowest_number.py test_data/test3_input.txt output3.txt
+        diff test_data/test3_expected.txt output3.txt
+        echo "Test 3 passed: Blank file"
